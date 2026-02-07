@@ -5,6 +5,8 @@ import java.util.*
 
 object DateUtils {
     
+    private const val MILLIS_IN_DAY = 86400000L
+    
     fun Long.toFormattedDate(pattern: String = "MMM dd, yyyy"): String {
         val formatter = SimpleDateFormat(pattern, Locale.getDefault())
         return formatter.format(Date(this))
@@ -20,8 +22,7 @@ object DateUtils {
     }
     
     fun getDaysBetween(start: Long, end: Long): Int {
-        val millisecondsInDay = 24 * 60 * 60 * 1000
-        return ((end - start) / millisecondsInDay).toInt()
+        return ((end - start) / MILLIS_IN_DAY).toInt()
     }
     
     fun addDays(timestamp: Long, days: Int): Long {
