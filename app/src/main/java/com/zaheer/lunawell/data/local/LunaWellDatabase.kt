@@ -22,6 +22,7 @@ import com.zaheer.lunawell.data.local.entity.PregnancyLogEntity
 import com.zaheer.lunawell.data.local.entity.ProfileEntity
 import com.zaheer.lunawell.data.local.entity.ReminderEntity
 import com.zaheer.lunawell.data.local.entity.SymptomLogEntity
+import com.zaheer.lunawell.utils.Constants
 
 @Database(
     entities = [
@@ -59,7 +60,7 @@ abstract class LunaWellDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     LunaWellDatabase::class.java,
-                    "lunawell_database"
+                    Constants.DATABASE_NAME
                 ).build()
                 INSTANCE = instance
                 instance
