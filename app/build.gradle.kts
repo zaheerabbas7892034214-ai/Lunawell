@@ -88,6 +88,9 @@ dependencies {
     // Biometric
     implementation(libs.androidx.biometric)
     
+    // Accompanist
+    implementation(libs.accompanist.permissions)
+    
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     
