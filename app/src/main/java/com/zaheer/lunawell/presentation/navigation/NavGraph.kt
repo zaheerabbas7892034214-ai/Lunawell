@@ -22,6 +22,17 @@ import com.zaheer.lunawell.presentation.pregnancy.PregnancyLogsScreen
 import com.zaheer.lunawell.presentation.reminders.RemindersScreen
 import com.zaheer.lunawell.presentation.reminders.RemindersViewModel
 import com.zaheer.lunawell.presentation.reminders.RemindersViewModelFactory
+import com.zaheer.lunawell.presentation.paywall.PaywallScreen
+import com.zaheer.lunawell.presentation.paywall.PaywallViewModel
+import com.zaheer.lunawell.presentation.paywall.PaywallViewModelFactory
+import com.zaheer.lunawell.presentation.settings.SettingsScreen
+import com.zaheer.lunawell.presentation.settings.SettingsViewModel
+import com.zaheer.lunawell.presentation.settings.SettingsViewModelFactory
+import com.zaheer.lunawell.presentation.settings.PrivacyScreen
+import com.zaheer.lunawell.presentation.settings.DeleteDataScreen
+import com.zaheer.lunawell.presentation.applock.AppLockScreen
+import com.zaheer.lunawell.presentation.applock.AppLockViewModel
+import com.zaheer.lunawell.presentation.applock.AppLockViewModelFactory
 
 sealed class Route(val route: String) {
     object Splash : Route("splash")
@@ -152,11 +163,25 @@ fun NavGraph(
         }
 
         composable(route = Route.Paywall.route) {
-            PaywallScreen(navController = navController)
+            val context = LocalContext.current
+            val viewModel: PaywallViewModel = viewModel(
+                factory = PaywallViewModelFactory(context.applicationContext as android.app.Application)
+            )
+            PaywallScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
 
         composable(route = Route.Settings.route) {
-            SettingsScreen(navController = navController)
+            val context = LocalContext.current
+            val viewModel: SettingsViewModel = viewModel(
+                factory = SettingsViewModelFactory(context.applicationContext as android.app.Application)
+            )
+            SettingsScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
 
         composable(route = Route.Privacy.route) {
@@ -164,66 +189,25 @@ fun NavGraph(
         }
 
         composable(route = Route.DeleteData.route) {
-            DeleteDataScreen(navController = navController)
+            val context = LocalContext.current
+            val viewModel: SettingsViewModel = viewModel(
+                factory = SettingsViewModelFactory(context.applicationContext as android.app.Application)
+            )
+            DeleteDataScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
 
         composable(route = Route.AppLock.route) {
-            AppLockScreen(navController = navController)
+            val context = LocalContext.current
+            val viewModel: AppLockViewModel = viewModel(
+                factory = AppLockViewModelFactory(context.applicationContext as android.app.Application)
+            )
+            AppLockScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
-}
-
-// Placeholder screens - These should be replaced with actual screen implementations
-@Composable
-private fun SplashScreen(navController: NavHostController) {
-    // TODO: Implement SplashScreen
-}
-
-@Composable
-private fun OnboardingScreen(navController: NavHostController) {
-    // TODO: Implement OnboardingScreen
-}
-
-@Composable
-private fun HomeScreen(navController: NavHostController) {
-    // TODO: Implement HomeScreen
-}
-
-@Composable
-private fun CalendarScreen(navController: NavHostController) {
-    // TODO: Implement CalendarScreen
-}
-
-@Composable
-private fun LogScreen(navController: NavHostController, selectedDate: String) {
-    // TODO: Implement LogScreen
-}
-
-@Composable
-private fun InsightsScreen(navController: NavHostController) {
-    // TODO: Implement InsightsScreen
-}
-
-@Composable
-private fun PaywallScreen(navController: NavHostController) {
-    // TODO: Implement PaywallScreen
-}
-
-@Composable
-private fun SettingsScreen(navController: NavHostController) {
-    // TODO: Implement SettingsScreen
-}
-
-@Composable
-private fun PrivacyScreen(navController: NavHostController) {
-    // TODO: Implement PrivacyScreen
-}
-
-@Composable
-private fun DeleteDataScreen(navController: NavHostController) {
-    // TODO: Implement DeleteDataScreen
-}
-
-@Composable
-private fun AppLockScreen(navController: NavHostController) {
-    // TODO: Implement AppLockScreen
+    }
 }
