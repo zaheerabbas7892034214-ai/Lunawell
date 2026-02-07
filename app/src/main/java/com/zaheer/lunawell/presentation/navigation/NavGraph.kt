@@ -1,15 +1,27 @@
 package com.zaheer.lunawell.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.zaheer.lunawell.presentation.breasthealth.BreastHealthDashboardScreen
+import com.zaheer.lunawell.presentation.breasthealth.BreastHealthViewModel
+import com.zaheer.lunawell.presentation.breasthealth.BreastHealthViewModelFactory
+import com.zaheer.lunawell.presentation.breasthealth.BreastLogScreen
+import com.zaheer.lunawell.presentation.export.ExportBackupScreen
+import com.zaheer.lunawell.presentation.export.ExportViewModel
+import com.zaheer.lunawell.presentation.export.ExportViewModelFactory
+import com.zaheer.lunawell.presentation.pregnancy.ContractionTimerScreen
+import com.zaheer.lunawell.presentation.pregnancy.KickCounterScreen
 import com.zaheer.lunawell.presentation.pregnancy.PregnancyDashboardScreen
 import com.zaheer.lunawell.presentation.pregnancy.PregnancyLogsScreen
-import com.zaheer.lunawell.presentation.pregnancy.KickCounterScreen
-import com.zaheer.lunawell.presentation.pregnancy.ContractionTimerScreen
+import com.zaheer.lunawell.presentation.reminders.RemindersScreen
+import com.zaheer.lunawell.presentation.reminders.RemindersViewModel
+import com.zaheer.lunawell.presentation.reminders.RemindersViewModelFactory
 
 sealed class Route(val route: String) {
     object Splash : Route("splash")
@@ -96,19 +108,47 @@ fun NavGraph(
         }
 
         composable(route = Route.BreastHealthDashboard.route) {
-            BreastHealthDashboardScreen(navController = navController)
+            val context = LocalContext.current
+            val viewModel: BreastHealthViewModel = viewModel(
+                factory = BreastHealthViewModelFactory(context.applicationContext as android.app.Application)
+            )
+            BreastHealthDashboardScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
 
         composable(route = Route.BreastLog.route) {
-            BreastLogScreen(navController = navController)
+            val context = LocalContext.current
+            val viewModel: BreastHealthViewModel = viewModel(
+                factory = BreastHealthViewModelFactory(context.applicationContext as android.app.Application)
+            )
+            BreastLogScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
 
         composable(route = Route.Reminders.route) {
-            RemindersScreen(navController = navController)
+            val context = LocalContext.current
+            val viewModel: RemindersViewModel = viewModel(
+                factory = RemindersViewModelFactory(context.applicationContext as android.app.Application)
+            )
+            RemindersScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
 
         composable(route = Route.ExportBackup.route) {
-            ExportBackupScreen(navController = navController)
+            val context = LocalContext.current
+            val viewModel: ExportViewModel = viewModel(
+                factory = ExportViewModelFactory(context.applicationContext as android.app.Application)
+            )
+            ExportBackupScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
 
         composable(route = Route.Paywall.route) {
@@ -130,7 +170,6 @@ fun NavGraph(
         composable(route = Route.AppLock.route) {
             AppLockScreen(navController = navController)
         }
-    }
 }
 
 // Placeholder screens - These should be replaced with actual screen implementations
@@ -162,28 +201,6 @@ private fun LogScreen(navController: NavHostController, selectedDate: String) {
 @Composable
 private fun InsightsScreen(navController: NavHostController) {
     // TODO: Implement InsightsScreen
-}
-
-
-
-@Composable
-private fun BreastHealthDashboardScreen(navController: NavHostController) {
-    // TODO: Implement BreastHealthDashboardScreen
-}
-
-@Composable
-private fun BreastLogScreen(navController: NavHostController) {
-    // TODO: Implement BreastLogScreen
-}
-
-@Composable
-private fun RemindersScreen(navController: NavHostController) {
-    // TODO: Implement RemindersScreen
-}
-
-@Composable
-private fun ExportBackupScreen(navController: NavHostController) {
-    // TODO: Implement ExportBackupScreen
 }
 
 @Composable
