@@ -7,7 +7,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 
-class BiometricManager(private val context: Context) {
+class AppBiometricManager(private val context: Context) {
     
     fun isBiometricAvailable(): Boolean {
         val biometricManager = BiometricManager.from(context)
