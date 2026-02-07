@@ -20,4 +20,10 @@ class PregnancyRepository(private val pregnancyLogDao: PregnancyLogDao) {
     fun getCurrentPregnancyLog(profileId: Long): Flow<PregnancyLog?> {
         return pregnancyLogDao.getCurrentPregnancyLog(profileId).map { it?.toDomain() }
     }
+    
+    fun getPregnancyLogsByProfile(profileId: Long): Flow<List<PregnancyLog>> {
+        return pregnancyLogDao.getPregnancyLogsByProfile(profileId).map { entities ->
+            entities.map { it.toDomain() }
+        }
+    }
 }

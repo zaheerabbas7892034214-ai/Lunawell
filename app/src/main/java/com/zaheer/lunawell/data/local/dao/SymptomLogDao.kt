@@ -14,4 +14,10 @@ interface SymptomLogDao {
 
     @Query("SELECT * FROM symptom_logs WHERE profileId = :profileId AND date BETWEEN :startDate AND :endDate")
     fun getSymptomsInRange(profileId: Long, startDate: Long, endDate: Long): Flow<List<SymptomLogEntity>>
+    
+    @Query("SELECT * FROM symptom_logs")
+    suspend fun getAllSymptomLogsOnce(): List<SymptomLogEntity>
+    
+    @Insert
+    suspend fun insertSymptomLogs(logs: List<SymptomLogEntity>)
 }

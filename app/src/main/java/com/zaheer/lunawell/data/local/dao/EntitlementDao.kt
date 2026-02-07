@@ -14,4 +14,10 @@ interface EntitlementDao {
 
     @Query("DELETE FROM entitlements")
     suspend fun clearEntitlements()
+    
+    @Query("SELECT * FROM entitlements")
+    suspend fun getAllEntitlementsOnce(): List<EntitlementEntity>
+    
+    @Insert
+    suspend fun insertEntitlements(entitlements: List<EntitlementEntity>)
 }

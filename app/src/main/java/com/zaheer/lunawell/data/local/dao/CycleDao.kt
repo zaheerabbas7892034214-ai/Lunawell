@@ -17,4 +17,10 @@ interface CycleDao {
 
     @Query("SELECT * FROM cycles WHERE profileId = :profileId ORDER BY startDate DESC LIMIT :limit")
     fun getRecentCycles(profileId: Long, limit: Int): Flow<List<CycleEntity>>
+    
+    @Query("SELECT * FROM cycles")
+    suspend fun getAllCyclesOnce(): List<CycleEntity>
+    
+    @Insert
+    suspend fun insertCycles(cycles: List<CycleEntity>)
 }

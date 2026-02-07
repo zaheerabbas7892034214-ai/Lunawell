@@ -20,4 +20,13 @@ interface ReminderDao {
 
     @Query("SELECT * FROM reminders WHERE profileId = :profileId AND isEnabled = 1")
     fun getActiveReminders(profileId: Long): Flow<List<ReminderEntity>>
+    
+    @Query("SELECT * FROM reminders WHERE id = :id")
+    suspend fun getReminderByIdOnce(id: Long): ReminderEntity?
+    
+    @Query("SELECT * FROM reminders")
+    suspend fun getAllRemindersOnce(): List<ReminderEntity>
+    
+    @Insert
+    suspend fun insertReminders(reminders: List<ReminderEntity>)
 }

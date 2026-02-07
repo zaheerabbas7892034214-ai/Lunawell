@@ -23,4 +23,10 @@ interface ProfileDao {
 
     @Query("SELECT * FROM profiles")
     fun getAllProfiles(): Flow<List<ProfileEntity>>
+    
+    @Query("SELECT * FROM profiles")
+    suspend fun getAllProfilesOnce(): List<ProfileEntity>
+    
+    @Insert
+    suspend fun insertProfiles(profiles: List<ProfileEntity>)
 }

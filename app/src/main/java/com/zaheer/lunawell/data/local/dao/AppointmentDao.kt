@@ -20,4 +20,10 @@ interface AppointmentDao {
 
     @Query("SELECT * FROM appointments WHERE profileId = :profileId AND date >= :currentDate ORDER BY date ASC")
     fun getUpcomingAppointments(profileId: Long, currentDate: Long): Flow<List<AppointmentEntity>>
+    
+    @Query("SELECT * FROM appointments")
+    suspend fun getAllAppointmentsOnce(): List<AppointmentEntity>
+    
+    @Insert
+    suspend fun insertAppointments(appointments: List<AppointmentEntity>)
 }

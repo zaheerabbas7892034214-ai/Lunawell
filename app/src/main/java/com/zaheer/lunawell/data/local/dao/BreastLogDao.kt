@@ -14,4 +14,10 @@ interface BreastLogDao {
 
     @Query("SELECT * FROM breast_logs WHERE profileId = :profileId ORDER BY date DESC LIMIT 1")
     fun getLastBreastLog(profileId: Long): Flow<BreastLogEntity?>
+    
+    @Query("SELECT * FROM breast_logs")
+    suspend fun getAllBreastLogsOnce(): List<BreastLogEntity>
+    
+    @Insert
+    suspend fun insertBreastLogs(logs: List<BreastLogEntity>)
 }
