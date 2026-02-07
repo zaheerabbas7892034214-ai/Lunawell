@@ -9,6 +9,7 @@ import com.zaheer.lunawell.domain.model.Cycle
 import com.zaheer.lunawell.domain.usecase.CycleInsights
 import com.zaheer.lunawell.domain.usecase.DetectPCOSPatternsUseCase
 import com.zaheer.lunawell.domain.usecase.GetCycleInsightsUseCase
+import com.zaheer.lunawell.domain.usecase.PCOSInsights
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -16,7 +17,7 @@ data class InsightsUiState(
     val isPro: Boolean = false,
     val cycleInsights: CycleInsights? = null,
     val recentCycles: List<Cycle> = emptyList(),
-    val pcosRisk: Boolean = false,
+    val pcosInsights: PCOSInsights? = null,
     val isLoading: Boolean = true,
     val error: String? = null
 )
@@ -64,17 +65,17 @@ class InsightsViewModel(
                         cycleRepository.getRecentCycles(profileId, 2).firstOrNull() ?: emptyList()
                     }
 
-                    val pcosRisk = if (isPro) {
+                    val pcosInsights = if (isPro) {
                         detectPCOSPatternsUseCase(profileId)
                     } else {
-                        false
+                        null
                     }
 
                     _uiState.value = InsightsUiState(
                         isPro = isPro,
                         cycleInsights = insights,
                         recentCycles = cycles,
-                        pcosRisk = pcosRisk,
+                        pcosInsights = pcosInsights,
                         isLoading = false
                     )
                 }

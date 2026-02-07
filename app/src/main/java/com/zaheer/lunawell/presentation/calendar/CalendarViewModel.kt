@@ -9,6 +9,7 @@ import com.zaheer.lunawell.domain.model.Cycle
 import com.zaheer.lunawell.domain.model.DailyLog
 import com.zaheer.lunawell.domain.usecase.CalculateFertileWindowUseCase
 import com.zaheer.lunawell.domain.usecase.PredictNextPeriodUseCase
+import com.zaheer.lunawell.utils.CycleCalculator
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
@@ -112,7 +113,7 @@ class CalendarViewModel(
         // Predict next period
         val lastCycle = cycles.maxByOrNull { it.startDate }
         val predictedPeriodStart = lastCycle?.let {
-            predictNextPeriodUseCase(it.startDate, it.averageCycleLength.toInt())
+            CycleCalculator.predictNextPeriod(it.startDate, it.averageCycleLength)
         }
         
         val predictedPeriodDates = mutableSetOf<Long>()
@@ -126,7 +127,7 @@ class CalendarViewModel(
         
         // Calculate fertile window
         val fertileWindow = lastCycle?.let {
-            calculateFertileWindowUseCase(it.startDate, it.averageCycleLength.toInt())
+            CycleCalculator.calculateFertileWindow(it.startDate, it.averageCycleLength)
         }
         
         val fertileDates = mutableSetOf<Long>()

@@ -10,6 +10,7 @@ import com.zaheer.lunawell.domain.model.Profile
 import com.zaheer.lunawell.domain.usecase.CalculateFertileWindowUseCase
 import com.zaheer.lunawell.domain.usecase.GetCurrentCycleUseCase
 import com.zaheer.lunawell.domain.usecase.PredictNextPeriodUseCase
+import com.zaheer.lunawell.utils.CycleCalculator
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -68,16 +69,16 @@ class HomeViewModel(
                             val now = System.currentTimeMillis()
                             val cycleDay = calculateCycleDay(cycle.startDate, now)
                             
-                            val nextPeriod = predictNextPeriodUseCase(
-                                lastPeriodDate = cycle.startDate,
-                                averageCycleLength = cycle.averageCycleLength.toInt()
+                            val nextPeriod = CycleCalculator.predictNextPeriod(
+                                cycle.startDate,
+                                cycle.averageCycleLength
                             )
                             
                             val daysUntil = ((nextPeriod - now) / (1000 * 60 * 60 * 24)).toInt()
                             
-                            val fertileWindow = calculateFertileWindowUseCase(
-                                lastPeriodDate = cycle.startDate,
-                                averageCycleLength = cycle.averageCycleLength.toInt()
+                            val fertileWindow = CycleCalculator.calculateFertileWindow(
+                                cycle.startDate,
+                                cycle.averageCycleLength
                             )
                             
                             val isFertile = fertileWindow?.let { (start, end) ->

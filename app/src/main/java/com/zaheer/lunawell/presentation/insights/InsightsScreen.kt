@@ -130,9 +130,11 @@ fun InsightsScreen(
 
                 // PRO features
                 if (uiState.isPro) {
-                    if (uiState.pcosRisk) {
-                        PCOSWarningCard()
-                        Spacer(modifier = Modifier.height(16.dp))
+                    uiState.pcosInsights?.let { pcosInsights ->
+                        if (pcosInsights.hasIrregularCycles) {
+                            PCOSWarningCard(pcosInsights)
+                            Spacer(modifier = Modifier.height(16.dp))
+                        }
                     }
 
                     AdvancedInsightsSection(uiState.cycleInsights)
@@ -317,33 +319,53 @@ fun SymptomFrequencySection(symptoms: List<String>) {
 }
 
 @Composable
-fun PCOSWarningCard() {
+fun PCOSWarningCard(pcosInsights: com.zaheer.lunawell.domain.usecase.PCOSInsights) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.errorContainer
         )
     ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.padding(16.dp)
         ) {
-            Icon(
-                imageVector = Icons.Default.Warning,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onErrorContainer,
-                modifier = Modifier.padding(end = 16.dp)
-            )
-            Column {
-                Text(
-                    text = "Potential PCOS Pattern Detected",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onErrorContainer
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onErrorContainer,
+                    modifier = Modifier.padding(end = 16.dp)
                 )
+                Column {
+                    Text(
+                        text = "Potential PCOS Pattern Detected",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onErrorContainer
+                    )
+                    Text(
+                        text = "Irregularity Score: ${(pcosInsights.irregularityScore * 100).toInt()}%",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onErrorContainer
+                    )
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            Text(
+                text = pcosInsights.disclaimer,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onErrorContainer
+            )
+            
+            if (pcosInsights.commonSymptoms.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Your cycle patterns show irregularities. Consider consulting a healthcare provider.",
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = "Related symptoms: ${pcosInsights.commonSymptoms.joinToString(", ")}",
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onErrorContainer
                 )
             }
