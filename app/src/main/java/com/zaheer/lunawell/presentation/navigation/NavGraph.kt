@@ -6,6 +6,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.zaheer.lunawell.presentation.pregnancy.PregnancyDashboardScreen
+import com.zaheer.lunawell.presentation.pregnancy.PregnancyLogsScreen
+import com.zaheer.lunawell.presentation.pregnancy.KickCounterScreen
+import com.zaheer.lunawell.presentation.pregnancy.ContractionTimerScreen
 
 sealed class Route(val route: String) {
     object Splash : Route("splash")
@@ -160,25 +164,7 @@ private fun InsightsScreen(navController: NavHostController) {
     // TODO: Implement InsightsScreen
 }
 
-@Composable
-private fun PregnancyDashboardScreen(navController: NavHostController) {
-    // TODO: Implement PregnancyDashboardScreen
-}
 
-@Composable
-private fun PregnancyLogsScreen(navController: NavHostController) {
-    // TODO: Implement PregnancyLogsScreen
-}
-
-@Composable
-private fun KickCounterScreen(navController: NavHostController) {
-    // TODO: Implement KickCounterScreen
-}
-
-@Composable
-private fun ContractionTimerScreen(navController: NavHostController) {
-    // TODO: Implement ContractionTimerScreen
-}
 
 @Composable
 private fun BreastHealthDashboardScreen(navController: NavHostController) {
