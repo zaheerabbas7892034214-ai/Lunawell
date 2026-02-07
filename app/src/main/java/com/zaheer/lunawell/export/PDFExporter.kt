@@ -1,7 +1,6 @@
 package com.zaheer.lunawell.export
 
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
